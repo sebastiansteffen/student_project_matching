@@ -32,21 +32,6 @@ first_names <- c(
   'Tatiana'
 )
 
-students <- c(
-  'Maya Balakrishnan', 
-  'Aticus Peterson',
-  'Laura Katsnelson',
-  'Daniel Yue',
-  'Wilbur Chen',
-  'Alex Moehring',
-  'Emma van Inwegen',
-  'Nils Lehr',
-  'Andreas Haupt',
-  'Hong Yi Tu Ye',
-  'Winston Espesite',
-  'Zubin Wadia',
-  'Tatiana Labuzova')
-
 pref_order <- list()
 pref_order[['Maya Balakrishnan']]	<- c('Aticus Peterson',	'Wilbur Chen',	'Laura Katsnelson',	'Zubin Wadia',	'Daniel Yue')
 pref_order[['Aticus Peterson']]	<- c('Wilbur Chen',	'Tatiana Labuzova',	'Winston Espesite',	'Laura Katsnelson',	'Daniel Yue')

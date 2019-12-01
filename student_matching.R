@@ -1,6 +1,5 @@
 library(dplyr)
 library(lpSolve)
-
 # install.packages("gmailr")
 library(gmailr)
 # Read https://github.com/r-lib/gmailr to configure gmail access.
@@ -8,10 +7,17 @@ library(gmailr)
 ls()
 rm(list=ls())
 
-#gm_auth_configure(path = '/Users/ssteffen/Dropbox (MIT)/teaching/15.575/575 Fall 2019/ssteffen/credentials.json')
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
+# Load Preferences
+source('preferences.R')
+
+students <- names(pref_order)
+
+#gm_auth_configure(path = '/Users/ssteffen/Dropbox (MIT)/teaching/15.575/575 Fall 2019/ssteffen/credentials.json')
 df <- data.frame(do.call(rbind, pref_order), stringsAsFactors = FALSE)
 df <- bind_cols(df, first_names = first_names, emails = emails)
+
 
 # Solve Preference Optimization. ------------------------------------------
 # Fill matrix of ordinal preferences
@@ -85,15 +91,17 @@ df <- bind_cols(df, email_to_send = unlist(BODY_), )
 SEND_EMAIL_ <- FALSE
 DRAFT_EMAIL_ <- FALSE
 
-for (i in 1:length(students)){
-  # Wait between each email to stay within gmail's rate limits.
-  Sys.sleep(0.5)
-  if (DRAFT_EMAIL_){
-    # Verify emails look correct and save a draft.
-    gm_create_draft(df$email_to_send[i])
-  }
-  if (SEND_EMAIL_){
-    # If all is good with your draft, then you can send it
-    gm_send_message(df$email_to_send[i])
+if ((!SEND_EMAIL_) & (!DRAFT_EMAIL_)) {
+  for (i in 1:length(students)){
+    # Wait between each email to stay within gmail's rate limits.
+    Sys.sleep(0.5)
+    if (DRAFT_EMAIL_){
+      # Verify emails look correct and save a draft.
+      gm_create_draft(df$email_to_send[i])
+    }
+    if (SEND_EMAIL_){
+      # If all is good with your draft, then you can send it
+      gm_send_message(df$email_to_send[i])
+    }
   }
 }
