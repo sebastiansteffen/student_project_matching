@@ -1,0 +1,5 @@
+# Ignore Credentials
+credentials.json
+
+# Ignore actual Student Preferences
+preferences.R
